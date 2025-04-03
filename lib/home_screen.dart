@@ -6,32 +6,22 @@ import 'package:state_management/user.dart';
 class HomeScreen extends ConsumerWidget {
   const HomeScreen({super.key});
 
-  void onSubmit(WidgetRef ref, String value) {
-    // ref.read(nameProvider.notifier).update((state) => value);
-    // ref.read(userProvider.notifier).updateName(value);
-    ref
-        .read(UserChangeNotifierProvider)
-        .updateName(value); // NO NEED OF .notifier here
-  }
-
-  void onSubmitAge(WidgetRef ref, String value) {
-    // ref.read(nameProvider.notifier).update((state) => value);
-    ref.read(UserChangeNotifierProvider).updateAge(int.parse(value));
-  }
-
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    final user = ref.watch(UserChangeNotifierProvider).user;
-    // final userSelect = ref.watch(userProvider.select((value)=>value.name)); // entire widget tree re-runs whenever the value of name changes
-    return Scaffold(
-      appBar: AppBar(title: Text(user.name)),
-      body: Column(
-        children: [
-          TextField(onSubmitted: (value) => onSubmit(ref, value)),
-          TextField(onSubmitted: (value) => onSubmitAge(ref, value)),
-          Center(child: Text(user.age.toString())),
-        ],
-      ),
+    final user = ref.watch(fetchUserProvider);
+    return user.when(
+      data: (data) {
+        return Scaffold(
+          appBar: AppBar(),
+          body: Column(children: [Center(child: Text(data.email))]),
+        );
+      },
+      error: (error, stackTrace) {
+        return Scaffold(body: Center(child: Text(error.toString())));
+      },
+      loading: () {
+        return Center(child: CircularProgressIndicator());
+      },
     );
   }
 }

@@ -6,19 +6,19 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 class User {
   final String name;
-  final int age;
-  User({required this.name, required this.age});
+  final String email;
+  User({required this.name, required this.email});
 
-  User copyWith({String? name, int? age}) {
-    return User(name: name ?? this.name, age: age ?? this.age);
+  User copyWith({String? name, String? email}) {
+    return User(name: name ?? this.name, email: email ?? this.email);
   }
 
   Map<String, dynamic> toMap() {
-    return <String, dynamic>{'name': name, 'age': age};
+    return <String, dynamic>{'name': name, 'email': email};
   }
 
   factory User.fromMap(Map<String, dynamic> map) {
-    return User(name: map['name'] as String, age: map['age'] as int);
+    return User(name: map['name'] as String, email: map['email'] as String);
   }
 
   String toJson() => json.encode(toMap());
@@ -27,42 +27,15 @@ class User {
       User.fromMap(json.decode(source) as Map<String, dynamic>);
 
   @override
-  String toString() => 'User(name: $name, age: $age)';
+  String toString() => 'User(name: $name, email: $email)';
 
   @override
   bool operator ==(covariant User other) {
     if (identical(this, other)) return true;
 
-    return other.name == name && other.age == age;
+    return other.name == name && other.email == email;
   }
 
   @override
-  int get hashCode => name.hashCode ^ age.hashCode;
-}
-
-class UserNotifier extends StateNotifier<User> {
-  UserNotifier() : super(User(name: "", age: 0));
-
-  void updateName(String n) {
-    n = "dr " + n;
-    state = state.copyWith(name: n);
-  }
-
-  void updateAge(int n) {
-    state = state.copyWith(age: n);
-  }
-}
-
-class UserChangeNotifier extends ChangeNotifier {
-  User user = User(name: '', age: 0);
-  void updateName(String n) {
-    n = "dr " + n;
-    user = user.copyWith(name: n);
-    notifyListeners();
-  }
-
-  void updateAge(int n) {
-    user = user.copyWith(age: n);
-    notifyListeners();
-  }
+  int get hashCode => name.hashCode ^ email.hashCode;
 }
