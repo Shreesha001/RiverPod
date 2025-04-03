@@ -40,9 +40,14 @@ class User {
 }
 
 class UserNotifier extends StateNotifier<User> {
-  UserNotifier(super.state);
+  UserNotifier() : super(User(name: "", age: 0));
 
   void updateName(String n) {
+    n = "dr " + n;
     state = state.copyWith(name: n);
+  }
+
+  void updateAge(int n) {
+    state = state.copyWith(age: n);
   }
 }

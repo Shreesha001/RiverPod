@@ -4,7 +4,7 @@ import 'package:state_management/home_screen.dart';
 import 'package:state_management/user.dart';
 
 final userProvider = StateNotifierProvider<UserNotifier, User>(
-  (ref) => UserNotifier(User(name: '', age: 0)),
+  (ref) => UserNotifier(),
 );
 
 void main() {
