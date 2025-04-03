@@ -7,6 +7,10 @@ final userProvider = StateNotifierProvider<UserNotifier, User>(
   (ref) => UserNotifier(),
 );
 
+final UserChangeNotifierProvider = ChangeNotifierProvider(
+  (ref) => UserChangeNotifier(),
+);
+
 void main() {
   runApp(ProviderScope(child: const MyApp()));
 }

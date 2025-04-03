@@ -1,6 +1,7 @@
 // ignore_for_file: public_member_api_docs, sort_constructors_first
 import 'dart:convert';
 
+import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 class User {
@@ -49,5 +50,19 @@ class UserNotifier extends StateNotifier<User> {
 
   void updateAge(int n) {
     state = state.copyWith(age: n);
+  }
+}
+
+class UserChangeNotifier extends ChangeNotifier {
+  User user = User(name: '', age: 0);
+  void updateName(String n) {
+    n = "dr " + n;
+    user = user.copyWith(name: n);
+    notifyListeners();
+  }
+
+  void updateAge(int n) {
+    user = user.copyWith(age: n);
+    notifyListeners();
   }
 }

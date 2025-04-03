@@ -8,17 +8,20 @@ class HomeScreen extends ConsumerWidget {
 
   void onSubmit(WidgetRef ref, String value) {
     // ref.read(nameProvider.notifier).update((state) => value);
-    ref.read(userProvider.notifier).updateName(value);
+    // ref.read(userProvider.notifier).updateName(value);
+    ref
+        .read(UserChangeNotifierProvider)
+        .updateName(value); // NO NEED OF .notifier here
   }
 
   void onSubmitAge(WidgetRef ref, String value) {
     // ref.read(nameProvider.notifier).update((state) => value);
-    ref.read(userProvider.notifier).updateAge(int.parse(value));
+    ref.read(UserChangeNotifierProvider).updateAge(int.parse(value));
   }
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    final user = ref.watch(userProvider);
+    final user = ref.watch(UserChangeNotifierProvider).user;
     // final userSelect = ref.watch(userProvider.select((value)=>value.name)); // entire widget tree re-runs whenever the value of name changes
     return Scaffold(
       appBar: AppBar(title: Text(user.name)),
