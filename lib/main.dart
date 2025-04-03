@@ -5,14 +5,8 @@ import 'package:http/http.dart' as http;
 import 'package:state_management/user.dart';
 
 final fetchUserProvider = FutureProvider((ref) {
-  //When making HTTP requests in Dart/Flutter,
-  // you need to convert a string URL into a URI object.
-  const url = "https://jsonplaceholder.typicode.com/users";
-  return http
-      .get(Uri.parse(url))
-      .then(
-        (value) => User.fromJson(value.body),
-      ); // 'get' expects a 'Uri', not a string.
+  final userRepositery = ref.watch(userRepositeryProvider);
+  return userRepositery.fetchUserData();
 });
 
 void main() {
